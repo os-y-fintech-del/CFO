@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>شركة الحموي وشركائه | 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:        #EFEAE0;
+    --bg-2:      #E6DFD1;
+    --surface:   #FFFFFF;
+    --surface-2: #FAF7F1;
+    --brown:     #8B7355;
+    --brown-l:   #C9A87C;
+    --brown-d:   #5C4A38;
+    --gray:      #6B6B6B;
+    --gray-l:    #9A9690;
+    --gray-d:    #3A3733;
+    --text:      #2D2A26;
+    --text-2:    #5C5852;
+    --muted:     #918C84;
+    --line:      #DDD5C7;
+    --success:   #6B8E5A; --success-bg: #E8F0E0;
+    --warn:      #C9A87C; --warn-bg:    #F5EBD8;
+    --danger:    #B85959; --danger-bg:  #F5E0E0;
+    --info:      #6B8294; --info-bg:    #E0E8EE;
+  }
+  html, body { overflow-x: hidden; }
+  body {
+    font-family: 'Cairo', sans-serif;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 100%);
+    color: var(--text); direction: rtl; min-height: 100vh; padding: 16px;
+  }
+  .container { max-width: 1500px; margin: 0 auto; }
+
+  header.hero {
+    background: linear-gradient(135deg, var(--gray-d) 0%, var(--brown-d) 100%);
+    color: var(--bg); border-radius: 18px; padding: 30px 36px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.16);
+    border: 1px solid var(--brown); position: relative; overflow: hidden;
+  }
+  header.hero::before {
+    content: ''; position: absolute; top: 0; right: 0; width: 280px; height: 100%;
+    background: radial-gradient(circle at right top, rgba(201,168,124,0.25), transparent 70%);
+    pointer-events: none;
+  }
+  header.hero h1 { font-size: 28px; font-weight: 800; margin-bottom: 6px; letter-spacing: 0.3px; }
+  header.hero .sub { color: var(--brown-l); font-size: 14px; font-weight: 500; }
+  .hero-row { display: flex; align-items: center; gap: 20px; }
+  .hero-logo { height: 64px; width: auto; object-fit: contain; flex-shrink: 0; }
+  .hero-text { flex: 1; min-width: 0; }
+  @media (max-width: 640px) { .hero-logo { height: 48px; } .hero-row { gap: 14px; } }
+  .header-meta {
+    display: flex; gap: 16px 28px; flex-wrap: wrap; margin-top: 16px;
+    font-size: 13px; color: var(--bg-2);
+  }
+  .header-meta b { color: var(--brown-l); font-weight: 700; }
+
+  nav.tabs {
+    margin: 18px 0 24px; background: var(--surface); border-radius: 14px;
+    padding: 6px; box-shadow: 0 4px 14px rgba(60,50,40,0.06);
+    border: 1px solid var(--line);
+    display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none;
+    position: sticky; top: 8px; z-index: 100;
+  }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button {
+    flex: 1; min-width: max-content;
+    padding: 12px 16px; border: none; background: transparent;
+    color: var(--text-2); font-family: inherit; font-weight: 600;
+    font-size: 13px; cursor: pointer; border-radius: 10px;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  nav.tabs button:hover { background: var(--bg); color: var(--brown-d); }
+  nav.tabs button.active {
+    background: linear-gradient(135deg, var(--gray-d), var(--brown-d));
+    color: var(--brown-l); box-shadow: 0 4px 10px rgba(60,50,40,0.18);
+  }
+
+  .page { display: none; animation: fade 0.3s; }
+  .page.active { display: block; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .section { margin-top: 24px; }
+  .section:first-child { margin-top: 0; }
+  .section-title {
+    font-size: 18px; font-weight: 800; color: var(--brown-d);
+    margin-bottom: 14px; padding-right: 14px;
+    border-right: 4px solid var(--brown); line-height: 1.2;
+  }
+  .section-title .sub { font-size: 11px; color: var(--muted); font-weight: 500; margin-right: 8px; }
+
+  .grid { display: grid; gap: 14px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--surface); border-radius: 14px; padding: 20px;
+    box-shadow: 0 4px 14px rgba(60,50,40,0.06);
+    border: 1px solid var(--line);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(60,50,40,0.10); }
+
+  .kpi { display: flex; flex-direction: column; gap: 6px; }
+  .kpi .label {
+    color: var(--text-2); font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .kpi .value {
+    font-size: 26px; font-weight: 800; color: var(--brown-d);
+    letter-spacing: -0.3px; line-height: 1.2; word-break: break-word;
+  }
+  .kpi .value .unit { font-size: 12px; color: var(--muted); margin-right: 4px; font-weight: 500; }
+  .kpi .meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .kpi.brown   { border-top: 3px solid var(--brown); }
+  .kpi.success { border-top: 3px solid var(--success); }
+  .kpi.warn    { border-top: 3px solid var(--warn); }
+  .kpi.danger  { border-top: 3px solid var(--danger); }
+  .kpi.info    { border-top: 3px solid var(--info); }
+  .kpi.gray    { border-top: 3px solid var(--gray); }
+
+  .progress { height: 6px; background: var(--bg-2); border-radius: 999px; overflow: hidden; margin-top: 6px; }
+  .progress > div { height: 100%; background: linear-gradient(90deg, var(--brown), var(--brown-l)); border-radius: 999px; }
+
+  .chart-card { padding: 22px; min-height: 320px; }
+  .chart-card h3 {
+    font-size: 14px; font-weight: 700; color: var(--brown-d);
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .chart-wrap { position: relative; height: 280px; }
+
+  .table-wrap {
+    background: var(--surface); border-radius: 14px; padding: 0;
+    border: 1px solid var(--line); overflow: hidden;
+    box-shadow: 0 4px 14px rgba(60,50,40,0.06);
+  }
+  .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 600px; }
+  thead { background: linear-gradient(135deg, var(--gray-d), var(--brown-d)); color: var(--bg); }
+  th { padding: 12px 14px; text-align: right; font-weight: 700; font-size: 12px; letter-spacing: 0.3px; white-space: nowrap; }
+  td { padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--text); }
+  td.num { font-feature-settings: 'tnum'; }
+  tbody tr:hover td { background: var(--surface-2); }
+  tbody tr:nth-child(even) td { background: rgba(239,234,224,0.4); }
+  tr.total-row td {
+    background: var(--bg-2) !important; font-weight: 800; color: var(--brown-d);
+    border-top: 2px solid var(--brown);
+  }
+  tr.header-row td {
+    background: var(--surface-2) !important; font-weight: 700; color: var(--brown-d);
+    border-top: 1px solid var(--line); font-size: 12px;
+  }
+
+  .badge {
+    display: inline-block; padding: 3px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; white-space: nowrap;
+  }
+  .badge.green { background: var(--success-bg); color: var(--success); }
+  .badge.brown { background: var(--warn-bg); color: var(--brown-d); }
+  .badge.red   { background: var(--danger-bg); color: var(--danger); }
+  .badge.gray  { background: #EEEAE3; color: var(--gray-d); }
+  .badge.info  { background: var(--info-bg); color: var(--info); }
+
+  .list-card { padding: 22px; }
+  .list-card h3 {
+    font-size: 14px; font-weight: 700; color: var(--brown-d);
+    margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--line);
+  }
+  .list-card ol, .list-card ul { padding-right: 20px; }
+  .list-card li {
+    font-size: 13px; color: var(--text); margin-bottom: 10px; line-height: 1.6;
+    padding-right: 6px;
+  }
+  .list-card li::marker { color: var(--brown); font-weight: 700; }
+
+  .pill {
+    display: inline-block; padding: 4px 12px; border-radius: 999px;
+    background: var(--surface-2); border: 1px solid var(--line);
+    font-size: 11px; color: var(--text-2); margin-left: 6px;
+  }
+
+  footer.foot {
+    margin-top: 32px; padding: 16px; text-align: center;
+    color: var(--muted); font-size: 11px;
+  }
+  footer.foot b { color: var(--brown-d); }
+
+  @media (max-width: 1024px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(2, 1fr); }
+    header.hero h1 { font-size: 22px; }
+  }
+  @media (max-width: 640px) {
+    body { padding: 10px; }
+    header.hero { padding: 22px 20px; }
+    header.hero h1 { font-size: 19px; }
+    .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+    .card { padding: 16px; }
+    .kpi .value { font-size: 22px; }
+    .section-title { font-size: 16px; }
+    th, td { padding: 9px 10px; font-size: 12px; }
+    .chart-wrap { height: 240px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="hero-row">
+      <img class="hero-logo" id="hero-logo" src="data:image/png;base64,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" alt="logo" onerror="this.style.display='none'">
+      <div class="hero-text">
+        <h1>التقرير المالي الشامل · 2025</h1>
+        <div class="sub" id="proj-sub">شركة الحموي وشركائه</div>
+      </div>
+    </div>
+    <div class="header-meta">
+      <span>السنة المالية: <b>2025</b></span>
+      <span>المقارنة مع: <b>2024</b></span>
+      <span>العملة: <b>دينار أردني</b></span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button class="active" data-page="home">🏠 الرئيسية</button>
+    <button data-page="income">📊 قائمة الدخل</button>
+    <button data-page="balance">💼 المركز المالي</button>
+    <button data-page="cashflow">💰 التدفقات النقدية</button>
+    <button data-page="branches">🏪 الفروع</button>
+    <button data-page="expenses">📉 المصاريف</button>
+    <button data-page="ratios">📈 المؤشرات</button>
+    <button data-page="summary">📝 التوصيات</button>
+  </nav>
+
+  <!-- =================== HOME =================== -->
+  <div class="page active" id="page-home">
+    <div class="section">
+      <h2 class="section-title">الأرقام الرئيسية <span class="sub">ملخص أداء السنة</span></h2>
+      <div class="grid grid-4">
+        <div class="card kpi brown"><div class="label">إجمالي الإيرادات</div><div class="value" id="k-rev"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi success"><div class="label">مجمل الربح</div><div class="value" id="k-gp"><span class="unit">د.أ</span>--</div><div class="meta" id="k-gp-margin">--</div></div>
+        <div class="card kpi success"><div class="label">صافي الربح</div><div class="value" id="k-np"><span class="unit">د.أ</span>--</div><div class="meta" id="k-np-margin">--</div></div>
+        <div class="card kpi info"><div class="label">إجمالي الموجودات</div><div class="value" id="k-assets"><span class="unit">د.أ</span>--</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="grid grid-4">
+        <div class="card kpi warn"><div class="label">إجمالي المديونية</div><div class="value" id="k-debt"><span class="unit">د.أ</span>--</div><div class="meta" id="k-debt-pct">--</div></div>
+        <div class="card kpi brown"><div class="label">حقوق الملكية</div><div class="value" id="k-equity"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi success"><div class="label">العائد على حقوق الملكية</div><div class="value" id="k-roe">--</div></div>
+        <div class="card kpi danger"><div class="label">رصيد النقد نهاية السنة</div><div class="value" id="k-cash"><span class="unit">د.أ</span>--</div><div class="meta" id="k-cash-warn">--</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <h2 class="section-title">التحليل البصري <span class="sub">توزيع الإيرادات والمصاريف</span></h2>
+      <div class="grid grid-2">
+        <div class="card chart-card"><h3>توزيع الإيرادات حسب القطاع</h3><div class="chart-wrap"><canvas id="ch-rev"></canvas></div></div>
+        <div class="card chart-card"><h3>توزيع المصاريف</h3><div class="chart-wrap"><canvas id="ch-exp"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== INCOME =================== -->
+  <div class="page" id="page-income">
+    <div class="section">
+      <h2 class="section-title">قائمة الدخل <span class="sub">السنة المنتهية في 31/12/2025</span></h2>
+      <div class="grid grid-3">
+        <div class="card kpi brown"><div class="label">الإيرادات</div><div class="value" id="i-rev"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi warn"><div class="label">تكلفة المبيعات</div><div class="value" id="i-cogs"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi success"><div class="label">مجمل الربح</div><div class="value" id="i-gp"><span class="unit">د.أ</span>--</div></div>
+      </div>
+      <div class="grid grid-3" style="margin-top:14px;">
+        <div class="card kpi gray"><div class="label">مصاريف التصنيع</div><div class="value" id="i-mfg"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi gray"><div class="label">مصاريف إدارية</div><div class="value" id="i-admin"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi gray"><div class="label">مصاريف بيع وتسويق</div><div class="value" id="i-sell"><span class="unit">د.أ</span>--</div></div>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px;">
+        <div class="card kpi warn"><div class="label">إجمالي المصاريف التشغيلية</div><div class="value" id="i-opex"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi success"><div class="label">صافي الربح</div><div class="value" id="i-np"><span class="unit">د.أ</span>--</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <h2 class="section-title">تفصيل الإيرادات</h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>القطاع</th><th>الإيراد</th><th>التكلفة</th><th>مجمل الربح</th><th>الهامش</th><th>% من الإجمالي</th></tr></thead>
+        <tbody id="tbody-rev"></tbody>
+      </table></div></div>
+    </div>
+  </div>
+
+  <!-- =================== BALANCE =================== -->
+  <div class="page" id="page-balance">
+    <div class="section">
+      <h2 class="section-title">المركز المالي المقارن <span class="sub">31/12/2025 مقابل 31/12/2024</span></h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>البيان</th><th>2025</th><th>2024</th><th>التغير</th><th>التغير %</th></tr></thead>
+        <tbody id="tbody-bs"></tbody>
+      </table></div></div>
+    </div>
+  </div>
+
+  <!-- =================== CASHFLOW =================== -->
+  <div class="page" id="page-cashflow">
+    <div class="section">
+      <h2 class="section-title">التدفقات النقدية <span class="sub">الطريقة غير المباشرة</span></h2>
+      <div class="grid grid-4">
+        <div class="card kpi success"><div class="label">من الأنشطة التشغيلية</div><div class="value" id="cf-op"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi danger"><div class="label">من الأنشطة الاستثمارية</div><div class="value" id="cf-inv"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi brown"><div class="label">من الأنشطة التمويلية</div><div class="value" id="cf-fin"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi warn"><div class="label">صافي التغير في النقد</div><div class="value" id="cf-net"><span class="unit">د.أ</span>--</div></div>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px;">
+        <div class="card kpi info"><div class="label">رصيد النقد بداية الفترة</div><div class="value" id="cf-open"><span class="unit">د.أ</span>--</div></div>
+        <div class="card kpi danger"><div class="label">رصيد النقد نهاية الفترة</div><div class="value" id="cf-close"><span class="unit">د.أ</span>--</div></div>
+      </div>
+    </div>
+    <div class="section">
+      <h2 class="section-title">تفصيل التدفقات التشغيلية</h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>البند</th><th>المبلغ</th></tr></thead>
+        <tbody id="tbody-cf"></tbody>
+      </table></div></div>
+    </div>
+  </div>
+
+  <!-- =================== BRANCHES =================== -->
+  <div class="page" id="page-branches">
+    <div class="section">
+      <h2 class="section-title">تحليل أداء الفروع <span class="sub">8 فروع</span></h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>الترتيب</th><th>الفرع</th><th>المبيعات</th><th>التكلفة</th><th>مجمل الربح</th><th>الهامش</th><th>% من الإجمالي</th><th>الربح/يوم</th></tr></thead>
+        <tbody id="tbody-br"></tbody>
+      </table></div></div>
+    </div>
+    <div class="section">
+      <h2 class="section-title">المصاريف البيعية المخصصة لكل فرع</h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>الفرع</th><th>المبيعات</th><th>المصاريف المخصصة</th><th>مجمل الربح</th><th>الربح بعد المصاريف</th><th>هامش صافي %</th></tr></thead>
+        <tbody id="tbody-be"></tbody>
+      </table></div></div>
+    </div>
+    <div class="section">
+      <div class="grid grid-2">
+        <div class="card chart-card"><h3>مبيعات الفروع</h3><div class="chart-wrap"><canvas id="ch-br-sales"></canvas></div></div>
+        <div class="card chart-card"><h3>هامش الربح لكل فرع</h3><div class="chart-wrap"><canvas id="ch-br-margin"></canvas></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =================== EXPENSES =================== -->
+  <div class="page" id="page-expenses">
+    <div class="section">
+      <h2 class="section-title">تحليل المصاريف نسبة إلى الإيرادات</h2>
+      <div class="table-wrap"><div class="table-scroll"><table>
+        <thead><tr><th>بند المصاريف</th><th>المبلغ</th><th>% من الإيرادات</th><th>لكل 1000 د.أ</th><th>الحالة</th><th>تعليق</th></tr></thead>
+        <tbody id="tbody-exp"></tbody>
+      </table></div></div>
+    </div>
+  </div>
+
+  <!-- =================== RATIOS =================== -->
+  <div class="page" id="page-ratios">
+    <div class="section">
+      <h2 class="section-title">المؤشرات المالية الشاملة</h2>
+      <div id="ratios-blocks"></div>
+    </div>
+  </div>
+
+  <!-- =================== SUMMARY =================== -->
+  <div class="page" id="page-summary">
+    <div class="section">
+      <h2 class="section-title">الملخص التنفيذي والتوصيات</h2>
+      <div class="grid grid-2">
+        <div class="card list-card"><h3>✅ نقاط القوة</h3><ol id="list-strengths"></ol></div>
+        <div class="card list-card"><h3>⚠️ نقاط الضعف والمخاطر</h3><ol id="list-weaknesses"></ol></div>
+      </div>
+      <div class="grid grid-2" style="margin-top:14px;">
+        <div class="card list-card"><h3>💰 تحليل التدفقات النقدية</h3><ol id="list-cash"></ol></div>
+        <div class="card list-card"><h3>🎯 التوصيات الاستراتيجية</h3><ol id="list-recs"></ol></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <b>التقرير المالي الشامل · 2025</b> — شركة 0000 وشركائه<br>
+    البيانات مبنية على التقرير المالي الشامل المعتمد
+  </footer>
+</div>
+
+<script>
+const DATA = {"company": "شركة الحموي وشركائه", "period": "2025 (مقارنة مع 2024)", "currency": "دينار أردني", "income": {"revenue": {"branches": 5599814.944, "wholesale": 5445.228, "export": 1669939.339, "total": 7275199.511}, "cogs": {"branches": 2844518.845, "inventory_adj": 14867.109, "wholesale": -28179.306, "export": 1243944.609, "total": 4075151.257}, "gross_profit": 3200048.2539999997, "opex": {"manufacturing": 663953.4660000001, "admin": 502793.637, "selling": 1375237.3900000001, "total": 2541984.4930000002}, "net_profit": 658063.7609999995}, "balance": {"current_assets": [{"label": "نقد لدى الصناديق والبنوك", "y2025": -20869.953, "y2024": 143913.218, "change": -164783.171, "pct": -1.1450176244408627}, {"label": "ذمم مدينة", "y2025": 286851.95, "y2024": 170368.481, "change": 116483.46900000001, "pct": 0.6837149002930889}, {"label": "مديونية الشركاء", "y2025": 500000.0, "y2024": 0.0, "change": 500000.0, "pct": 0.0}, {"label": "بضاعة ومستودعات", "y2025": 954538.487, "y2024": 639920.048, "change": 314618.439, "pct": 0.49165273065487713}, {"label": "مشاريع تحت التنفيذ", "y2025": 2666333.532, "y2024": 1719518.394, "change": 946815.138, "pct": 0.5506280952293203}, {"label": "أرصدة مدينة أخرى", "y2025": 224598.627, "y2024": 167503.303, "change": 57095.32399999999, "pct": 0.3408608843970079}, {"label": "إيرادات مستحقة القبض", "y2025": 10183.78, "y2024": 0.0, "change": 10183.78, "pct": 0.0}], "fixed_assets": [{"label": "موجودات ثابتة ملموسة", "y2025": 1373111.344, "y2024": 1261357.413, "change": 111753.9310000001, "pct": 0.08859814819195906}, {"label": "مجمع الاستهلاك", "y2025": -365439.077, "y2024": -290541.077, "change": -74898.0, "pct": -0.2577879891317399}, {"label": "إطفاءات", "y2025": -10003.0, "y2024": 0.0, "change": -10003.0, "pct": 0.0}, {"label": "صافي الموجودات الثابتة", "y2025": 997669.267, "y2024": 970816.3359999999, "change": 26852.9310000001, "pct": 0.027660155689840083}], "total_assets": {"label": "إجمالي الموجودات", "y2025": 5619305.69, "y2024": 3812039.7799999993, "change": 1807265.9100000001, "pct": 0.4740941895417475}, "current_liab": [{"label": "ذمم دائنة", "y2025": 336300.953, "y2024": 443157.065, "change": -106856.11200000002, "pct": -0.24112469469487083}, {"label": "ذمم دائنة خدمية", "y2025": 219778.421, "y2024": -22936.365, "change": 242714.786, "pct": 10.582094678036384}, {"label": "شيكات مؤجلة الدفع", "y2025": 1003848.083, "y2024": 864521.726, "change": 139326.35699999996, "pct": 0.1611600412226077}, {"label": "قروض قصيرة الأجل", "y2025": 92400.0, "y2024": 86898.503, "change": 5501.497000000003, "pct": 0.06330945655070724}, {"label": "أرصدة دائنة أخرى", "y2025": 313181.592, "y2024": 39268.039, "change": 273913.553, "pct": 6.9754833695667875}], "total_current_liab": {"label": "إجمالي المطلوبات المتداولة", "y2025": 1965509.0489999999, "y2024": 1410908.968, "change": 554600.081, "pct": 0.3930799885595452}, "longterm_liab": [{"label": "قروض وعد شراء أرض ناعور", "y2025": 1496390.213, "y2024": 1219474.298, "change": 276915.91500000004, "pct": 0.22707810689750188}, {"label": "قروض مركزية مصنع ناعور", "y2025": 1164132.123, "y2024": 850185.97, "change": 313946.15299999993, "pct": 0.36926762388233714}], "total_longterm_liab": {"label": "إجمالي المطلوبات طويلة الأجل", "y2025": 2660522.336, "y2024": 2069660.268, "change": 590862.068, "pct": 0.28548746726001323}, "equity": [{"label": "", "y2025": 0.0, "y2024": 0.0, "change": 0.0, "pct": 0.0}, {"label": "حقوق الملكية", "y2025": 0.0, "y2024": 0.0, "change": 0.0, "pct": 0.0}, {"label": "رأس مال الشركاء", "y2025": 30000.0, "y2024": 30000.0, "change": 0.0, "pct": 0.0}], "total_equity": {"label": "أرباح وخسائر مدورة", "y2025": 305210.544, "y2024": 305210.544, "change": 0.0, "pct": 0.0}, "total_liab_equity": {"label": "إجمالي حقوق الملكية", "y2025": 993274.3049999995, "y2024": 331470.544, "change": 661803.7609999995, "pct": 1.9965688444400642}}, "cashflow": {"operating": {"net_profit": 658063.7609999995, "depreciation": 10003.0, "amortization": 0.0, "receivables_change": -314618.439, "partners_debt": -57095.32399999999, "inventory_change": -10183.78, "other_dr": -106856.11200000002, "accrued_rev": 242714.786, "payables_change": 139326.35699999996, "service_payables": 5501.497000000003, "pdc_checks": 273913.553, "st_loans": 299183.8299999993, "other_cr": 0.0, "net": 0.0}, "investing": {"fixed_assets": -1058569.138, "projects_wip": 0.0, "net": 0.0}, "financing": {"lt_loans": 0.0, "net": -168523.24000000046}, "net_change": 3740.0690000004615, "opening_cash": -20869.953, "closing_cash": 3740.0690000004615}, "branches": [{"name": "الصويفية", "sales": 380913.509, "cost": 193009.47807954004, "gp": 187904.03092045998, "margin": 0.4932984167816951, "pct": 0.06802251731695796, "pday": 514.8055641656438, "rank": 1}, {"name": "مكة مول", "sales": 458646.279, "cost": 222286.1012651094, "gp": 236360.17773489057, "margin": 0.5153430618694512, "pct": 0.08190382782049306, "pday": 647.5621307805221, "rank": 2}, {"name": "البوليفارد", "sales": 1216796.015, "cost": 662869.3021505048, "gp": 553926.7128494951, "margin": 0.45523383214687396, "pct": 0.21729218325397573, "pday": 1517.6074324643703, "rank": 3}, {"name": "العبدلي مول", "sales": 797207.205, "cost": 392294.5374827256, "gp": 404912.6675172744, "margin": 0.5079139588524848, "pct": 0.14236313395573522, "pday": 1109.3497740199298, "rank": 4}, {"name": "المطار الشمالي", "sales": 606667.706, "cost": 304220.07130178995, "gp": 302447.63469821005, "margin": 0.49853920310406313, "pct": 0.10833709900539171, "pday": 828.6236567074247, "rank": 5}, {"name": "المطار الجنوبي", "sales": 419241.844, "cost": 195443.00658547218, "gp": 223798.8374145278, "margin": 0.5338179874395549, "pct": 0.0748670890364337, "pday": 613.1474997658296, "rank": 6}, {"name": "تاج مول", "sales": 667827.51, "cost": 322534.73247297155, "gp": 345292.77752702846, "margin": 0.5170388646119541, "pct": 0.1192588534939986, "pday": 946.0076096630917, "rank": 7}, {"name": "عبدالله غوشة", "sales": 1052514.876, "cost": 551861.6156618865, "gp": 500653.2603381134, "margin": 0.4756733341772867, "pct": 0.18795529611701395, "pday": 1371.6527680496258, "rank": 8}], "branch_totals": {"sales": 5599814.944, "cost": 2844518.845, "gp": 2755296.0989999995, "margin": 0.4920334201315349, "pday": 7548.7564356164385}, "diversification": [{"name": "فروع التجزئة", "rev": 5599814.944, "cost": 2844518.845, "gp": 2755296.099, "margin": 0.49203342013153495, "pct": 0.7697129041661549}, {"name": "الجملة المحلية", "rev": 5445.228, "cost": 28179.306, "gp": -22734.078, "margin": -4.175046113771545, "pct": 0.0007484644224212534}, {"name": "التصدير", "rev": 1669939.339, "cost": 1243944.609, "gp": 425994.73, "margin": 0.25509593076302756, "pct": 0.22953863141142383}], "branch_expenses": [{"name": "يُخصم: مصاريف تخص التصدير", "sales": 10059.2, "pct": 0.0, "expense": 0.0, "net": 0.0, "margin": 0.0}, {"name": "المصاريف البيعية للتوزيع على الفروع", "sales": 1365178.1900000002, "pct": 0.0, "expense": 0.0, "net": 0.0, "margin": 0.0}, {"name": "الفرع", "sales": 0.0, "pct": 0.0, "expense": 0.0, "net": 0.0, "margin": 0.0}, {"name": "الصويفية", "sales": 380913.509, "pct": 0.06802251731695796, "expense": 193009.47807954004, "net": 187904.03092045998, "margin": 92862.85707000834}, {"name": "مكة مول", "sales": 458646.279, "pct": 0.08190382782049306, "expense": 222286.1012651094, "net": 236360.17773489057, "margin": 111813.31941805237}, {"name": "البوليفارد", "sales": 1216796.015, "pct": 0.21729218325397573, "expense": 662869.3021505048, "net": 553926.7128494951, "margin": 296642.54943581094}], "expense_breakdown": [{"name": "تكلفة المبيعات (معدّلة)", "amount": 4075151.257, "pct": 0.5601428869185551, "per1k": 560.1428869185551, "status": "أساسي", "note": "مكون رئيسي - تكلفة المنتج"}, {"name": "رواتب التصنيع", "amount": 472330.174, "pct": 0.06492332935830053, "per1k": 64.92332935830053, "status": "مقبول", "note": "العمالة الصناعية"}, {"name": "مستهلكات التصنيع", "amount": 92842.795, "pct": 0.012761546244831223, "per1k": 12.761546244831223, "status": "مقبول", "note": "مواد استهلاكية للإنتاج"}, {"name": "مصاريف تشغيلية أخرى", "amount": 79461.996, "pct": 0.010922311598445455, "per1k": 10.922311598445456, "status": "مقبول", "note": "إيجار وكهرباء وصيانة المصنع"}, {"name": "استهلاك أصول التصنيع", "amount": 19318.501, "pct": 0.0026553912330226402, "per1k": 2.65539123302264, "status": "طبيعي", "note": "استهلاك معدات الإنتاج"}, {"name": "رواتب الإدارة", "amount": 267267.989, "pct": 0.03673686042505014, "per1k": 36.73686042505014, "status": "مراجعة", "note": "نسبة مرتفعة نسبياً"}, {"name": "مصاريف إدارية وعمومية", "amount": 218623.246, "pct": 0.030050481181917377, "per1k": 30.050481181917377, "status": "مراجعة", "note": "تشمل مرابحة 69,584 وتبرعات 56,455"}, {"name": "استهلاك إداري", "amount": 6899.402, "pct": 0.0009483454013279225, "per1k": 0.9483454013279224, "status": "طبيعي", "note": ""}, {"name": "إطفاء العلامات التجارية", "amount": 10003.0, "pct": 0.0013749451111100945, "per1k": 1.3749451111100945, "status": "طبيعي", "note": ""}, {"name": "رواتب البيع", "amount": 478973.081, "pct": 0.06583641868182438, "per1k": 65.83641868182438, "status": "مراجعة", "note": "أكبر بند في المصاريف البيعية"}, {"name": "مصاريف بيعية تشغيلية", "amount": 295316.313, "pct": 0.040592194420714635, "per1k": 40.592194420714634, "status": "مرتفع", "note": "تشمل مواد 133,485 وفيزا 64,923"}, {"name": "إيجارات المعارض", "amount": 535227.234, "pct": 0.07356873625125249, "per1k": 73.56873625125249, "status": "مرتفع", "note": "يشمل عمولات المطار 141,689"}, {"name": "استهلاك بيعي", "amount": 48680.097, "pct": 0.006691238766221652, "per1k": 6.691238766221652, "status": "طبيعي", "note": "استهلاك ديكورات الفروع"}, {"name": "تسويق وترويج", "amount": 17040.665, "pct": 0.002342295214617105, "per1k": 2.342295214617105, "status": "منخفض", "note": "يحتاج رفع لدعم المبيعات"}], "ratios": {"profitability": [{"name": "هامش مجمل الربح", "value": "0.43985711308144493", "rating": "جيد جداً", "benchmark": "30-50%", "note": "قوة تسعير ممتازة في السوق المحلي"}, {"name": "هامش صافي الربح", "value": "0.09045301919280925", "rating": "جيد", "benchmark": "5-15%", "note": "ربحية جيدة رغم المصاريف التشغيلية"}, {"name": "هامش EBITDA", "value": "0.11168751273026079", "rating": "جيد", "benchmark": "15-25%", "note": "أداء تشغيلي صحي"}], "returns": [{"name": "العائد على حقوق الملكية ROE", "value": "0.6625196662064059", "rating": "استثنائي", "benchmark": "15-25%", "note": "مرتفع بسبب الرفع المالي العالي"}, {"name": "العائد على الموجودات ROA", "value": "0.1171076637049798", "rating": "مقبول", "benchmark": "5-10%", "note": "تأثر بحجم الأصول والمشاريع"}, {"name": "العائد على رأس المال المستثمر ROCE", "value": "0.18010410147508796", "rating": "جيد", "benchmark": "10-20%", "note": "عائد جيد على إجمالي رأس المال"}, {"name": "العائد على إجمالي الاستثمار ROI", "value": "0.1171076637049798", "rating": "مقبول", "benchmark": "8-15%", "note": "عائد كلي على جميع الموجودات"}, {"name": "فترة استرداد الاستثمار", "value": "8.539150798185352", "rating": "طويلة", "benchmark": "3-5 سنوات", "note": "بسبب ضخامة المشاريع تحت التنفيذ"}], "liquidity": [{"name": "النسبة السريعة", "value": "0.5091629593408199", "rating": "ضعيف", "benchmark": "1.0-1.5", "note": "تأثر بالمشاريع والمخزون"}], "leverage": [{"name": "الدين إلى حقوق الملكية", "value": "4.657355336499923", "rating": "مرتفع جداً", "benchmark": "< 2.0x", "note": "رفع مالي خطير"}], "efficiency": [{"name": "معدل دوران المخزون", "value": "4.269237241347609", "rating": "جيد", "benchmark": "4-8", "note": "حركة بضاعة نشطة"}, {"name": "أيام المخزون", "value": "85.4953658852619", "rating": "جيد", "benchmark": "45-90", "note": "بضاعة لا تتكدس"}, {"name": "معدل دوران الذمم المدينة", "value": "25.362210405053894", "rating": "ممتاز", "benchmark": "6-12", "note": "تحصيل سريع"}, {"name": "أيام التحصيل", "value": "14.39149010163826", "rating": "ممتاز", "benchmark": "30-60", "note": "أغلب المبيعات نقدية"}]}, "key_numbers": ["إجمالي الإيرادات: 7,275,200 دينار", "مجمل الربح: 3,200,048 دينار", "صافي الربح: 658,064 دينار", "إجمالي الموجودات: 5,619,306 دينار", "إجمالي المديونية: 4,626,031 دينار", "حقوق الملكية: 993,274 دينار", "رصيد النقد: -20,870 دينار"], "strengths": ["تنوع مصادر الإيرادات: 77% تجزئة، 23% تصدير مع توسع دولي", "معدل دوران ذمم مدينة ممتاز - أغلب المبيعات نقدية", "تغطية فوائد/مرابحات قوية (46 مرة) - قدرة عالية على خدمة الدين", "عائد استثنائي على حقوق الملكية (66%) رغم الرفع المالي", "8 نقاط بيع استراتيجية تغطي أهم المواقع التجارية والمطار", "استثمارات توسعية طموحة: مصنع ناعور + فروع أمريكا"], "weaknesses": ["نسبة مديونية خطيرة (82%) - الشركة تعمل بأموال الغير بشكل شبه كامل", "رأس مال 30,000 دينار فقط مقابل عمليات بـ 7.3 مليون!", "مصاريف بيعية مرتفعة (19% من الإيرادات) خاصة عمولات المطار 141,689", "فرع البوليفارد: الأعلى إيراداً لكن الأقل هامشاً (35.9%)", "التبرعات الإدارية مرتفعة (56,455 دينار) تحتاج مراجعة", "مصاريف المرابحة الإسلامية (69,584) تشكل عبئاً على الأرباح"], "cash_analysis": ["تم توجيه القسم الأكبر لسداد الموردين والمشتريات", "الرواتب والأجور استحوذت على حوالي 10% من التدفقات", "أقساط القروض والمرابحات استنزفت 10% من التدفقات", "المشاريع التوسعية استهلكت 946,816 دينار إضافية", "الشيكات المؤجلة ارتفعت 139,326 دينار - ضغط مستقبلي", "النتيجة: انخفاض الرصيد النقدي 164,783 دينار"], "recommendations": ["تحويل مديونية الشركاء (500,000) إلى زيادة رأس مال", "إعادة هيكلة القروض لتخفيف الضغط على التدفقات", "مراجعة عقود إيجار المعارض وعمولات المطار للتفاوض", "تحسين هامش ربح فرعي البوليفارد وعبدالله غوشة", "دراسة جدوى دقيقة لمشاريع أمريكا قبل ضخ المزيد", "تخفيض التبرعات والمصاريف الاستشارية مؤقتاً", "زيادة ميزانية التسويق الرقمي (حالياً 0.2% فقط)"]};
+
+const fmtInt = v => Math.round(v).toLocaleString('en-US');
+const fmtJD  = v => `<span class="unit">د.أ</span>${fmtInt(v)}`;
+const fmtPct = v => `${(v * 100).toFixed(1)}%`;
+const set = (id, val) => { const el = document.getElementById(id); if (el) el.innerHTML = val; };
+const palette = ['#8B7355','#6B8E5A','#B85959','#6B8294','#C9A87C','#5C4A38','#9A9690','#3A3733'];
+
+document.querySelectorAll('nav.tabs button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav.tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('page-' + btn.dataset.page).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// --- Home KPIs ---
+const I = DATA.income, B = DATA.balance, C = DATA.cashflow;
+set('k-rev', fmtJD(I.revenue.total));
+set('k-gp',  fmtJD(I.gross_profit));
+set('k-gp-margin', fmtPct(I.gross_profit / I.revenue.total) + ' من الإيرادات');
+set('k-np',  fmtJD(I.net_profit));
+set('k-np-margin', fmtPct(I.net_profit / I.revenue.total) + ' هامش صافي');
+set('k-assets', fmtJD(B.total_assets.y2025));
+const totalDebt = B.total_current_liab.y2025 + B.total_longterm_liab.y2025;
+set('k-debt',  fmtJD(totalDebt));
+set('k-debt-pct', fmtPct(totalDebt / B.total_assets.y2025) + ' من الموجودات');
+set('k-equity', fmtJD(B.total_equity.y2025));
+const roe = (DATA.ratios.returns.find(r => r.name.includes('ROE')) || {}).value || '--';
+set('k-roe', roe);
+set('k-cash', fmtJD(C.closing_cash));
+if (C.closing_cash < 0) set('k-cash-warn', '⚠️ سيولة سالبة');
+
+// --- Charts: Home ---
+new Chart(document.getElementById('ch-rev'), {
+  type: 'doughnut',
+  data: {
+    labels: DATA.diversification.map(d => d.name),
+    datasets: [{ data: DATA.diversification.map(d => d.rev), backgroundColor: palette, borderColor: '#FFFFFF', borderWidth: 3 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 12 }, padding: 12 } } } }
+});
+
+new Chart(document.getElementById('ch-exp'), {
+  type: 'doughnut',
+  data: {
+    labels: ['تكلفة المبيعات','مصاريف تصنيع','مصاريف إدارية','مصاريف بيع وتسويق'],
+    datasets: [{
+      data: [I.cogs.total, I.opex.manufacturing, I.opex.admin, I.opex.selling],
+      backgroundColor: palette, borderColor: '#FFFFFF', borderWidth: 3
+    }]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 12 }, padding: 12 } } } }
+});
+
+// --- Income page ---
+set('i-rev',   fmtJD(I.revenue.total));
+set('i-cogs',  fmtJD(I.cogs.total));
+set('i-gp',    fmtJD(I.gross_profit));
+set('i-mfg',   fmtJD(I.opex.manufacturing));
+set('i-admin', fmtJD(I.opex.admin));
+set('i-sell',  fmtJD(I.opex.selling));
+set('i-opex',  fmtJD(I.opex.total));
+set('i-np',    fmtJD(I.net_profit));
+
+document.getElementById('tbody-rev').innerHTML = DATA.diversification.map(d => `
+  <tr>
+    <td>${d.name}</td>
+    <td class="num">${fmtJD(d.rev)}</td>
+    <td class="num">${fmtJD(d.cost)}</td>
+    <td class="num">${fmtJD(d.gp)}</td>
+    <td><span class="badge ${d.margin >= 0.4 ? 'green' : d.margin >= 0.2 ? 'brown' : 'red'}">${fmtPct(d.margin)}</span></td>
+    <td>${fmtPct(d.pct)}</td>
+  </tr>`).join('');
+
+// --- Balance sheet ---
+function bsRow(row, isTotal=false, header=null) {
+  if (header) return `<tr class="header-row"><td colspan="5">${header}</td></tr>`;
+  const pctText = row.pct ? (row.pct >= 0 ? '+' : '') + (row.pct*100).toFixed(1) + '%' : '—';
+  return `<tr class="${isTotal ? 'total-row' : ''}">
+    <td>${row.label}</td>
+    <td class="num">${fmtJD(row.y2025)}</td>
+    <td class="num">${fmtJD(row.y2024)}</td>
+    <td class="num">${fmtJD(row.change)}</td>
+    <td>${pctText}</td>
+  </tr>`;
+}
+
+let bsHtml = '';
+bsHtml += bsRow(null, false, 'الموجودات المتداولة');
+B.current_assets.forEach(r => bsHtml += bsRow(r));
+bsHtml += bsRow(null, false, 'الموجودات الثابتة');
+B.fixed_assets.forEach(r => bsHtml += bsRow(r));
+bsHtml += bsRow(B.total_assets, true);
+bsHtml += bsRow(null, false, 'المطلوبات المتداولة');
+B.current_liab.forEach(r => bsHtml += bsRow(r));
+bsHtml += bsRow(B.total_current_liab, true);
+bsHtml += bsRow(null, false, 'المطلوبات طويلة الأجل');
+B.longterm_liab.forEach(r => bsHtml += bsRow(r));
+bsHtml += bsRow(B.total_longterm_liab, true);
+bsHtml += bsRow(null, false, 'حقوق الملكية');
+B.equity.forEach(r => bsHtml += bsRow(r));
+bsHtml += bsRow(B.total_equity, true);
+bsHtml += bsRow(B.total_liab_equity, true);
+document.getElementById('tbody-bs').innerHTML = bsHtml;
+
+// --- Cash flow ---
+set('cf-op',    fmtJD(C.operating.net));
+set('cf-inv',   fmtJD(C.investing.net));
+set('cf-fin',   fmtJD(C.financing.net));
+set('cf-net',   fmtJD(C.net_change));
+set('cf-open',  fmtJD(C.opening_cash));
+set('cf-close', fmtJD(C.closing_cash));
+
+const cfLines = [
+  ['صافي ربح الفترة', C.operating.net_profit],
+  ['مصروف الاستهلاك', C.operating.depreciation],
+  ['مصروف الإطفاءات', C.operating.amortization],
+  ['(الزيادة) في الذمم المدينة', C.operating.receivables_change],
+  ['(الزيادة) في مديونية الشركاء', C.operating.partners_debt],
+  ['(الزيادة) في البضاعة', C.operating.inventory_change],
+  ['(الزيادة) في الأرصدة المدينة', C.operating.other_dr],
+  ['(الزيادة) في الإيرادات المستحقة', C.operating.accrued_rev],
+  ['(النقص) في الذمم الدائنة', C.operating.payables_change],
+  ['الزيادة في الذمم الخدمية', C.operating.service_payables],
+  ['الزيادة في الشيكات المؤجلة', C.operating.pdc_checks],
+  ['الزيادة في القروض القصيرة', C.operating.st_loans],
+  ['الزيادة في الأرصدة الدائنة', C.operating.other_cr],
+];
+document.getElementById('tbody-cf').innerHTML =
+  cfLines.map(([n, v]) => `<tr><td>${n}</td><td class="num" style="color:${v<0?'var(--danger)':'var(--text)'}">${fmtJD(v)}</td></tr>`).join('') +
+  `<tr class="total-row"><td>صافي التدفقات التشغيلية</td><td class="num">${fmtJD(C.operating.net)}</td></tr>`;
+
+// --- Branches ---
+document.getElementById('tbody-br').innerHTML = DATA.branches.map(b => `
+  <tr>
+    <td><b style="color:var(--brown-d)">#${b.rank}</b></td>
+    <td>${b.name}</td>
+    <td class="num">${fmtJD(b.sales)}</td>
+    <td class="num">${fmtJD(b.cost)}</td>
+    <td class="num">${fmtJD(b.gp)}</td>
+    <td><span class="badge ${b.margin >= 0.5 ? 'green' : b.margin >= 0.45 ? 'brown' : 'red'}">${fmtPct(b.margin)}</span></td>
+    <td>${fmtPct(b.pct)}</td>
+    <td class="num">${fmtJD(b.pday)}</td>
+  </tr>`).join('') +
+  `<tr class="total-row"><td>—</td><td>الإجمالي</td>
+   <td class="num">${fmtJD(DATA.branch_totals.sales)}</td>
+   <td class="num">${fmtJD(DATA.branch_totals.cost)}</td>
+   <td class="num">${fmtJD(DATA.branch_totals.gp)}</td>
+   <td>${fmtPct(DATA.branch_totals.margin)}</td>
+   <td>100%</td>
+   <td class="num">${fmtJD(DATA.branch_totals.pday)}</td></tr>`;
+
+document.getElementById('tbody-be').innerHTML = DATA.branch_expenses.map(b => `
+  <tr>
+    <td>${b.name}</td>
+    <td class="num">${fmtJD(b.sales)}</td>
+    <td class="num">${fmtJD(b.expense)}</td>
+    <td class="num">${fmtJD(DATA.branches.find(x=>x.name===b.name)?.gp || 0)}</td>
+    <td class="num">${fmtJD(b.net)}</td>
+    <td><span class="badge ${b.margin >= 0.27 ? 'green' : b.margin >= 0.22 ? 'brown' : 'red'}">${fmtPct(b.margin)}</span></td>
+  </tr>`).join('');
+
+new Chart(document.getElementById('ch-br-sales'), {
+  type: 'bar',
+  data: {
+    labels: DATA.branches.map(b => b.name),
+    datasets: [
+      { label: 'المبيعات',     data: DATA.branches.map(b=>b.sales), backgroundColor: '#8B7355' },
+      { label: 'مجمل الربح',  data: DATA.branches.map(b=>b.gp), backgroundColor: '#6B8E5A' },
+    ]
+  },
+  options: { responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom', labels: { font: { family: 'Cairo', size: 11 } } } },
+    scales: { y: { beginAtZero: true } }
+  }
+});
+
+new Chart(document.getElementById('ch-br-margin'), {
+  type: 'bar',
+  data: {
+    labels: DATA.branches.map(b => b.name),
+    datasets: [{ label: 'الهامش %', data: DATA.branches.map(b=>b.margin*100), backgroundColor: '#C9A87C', borderRadius: 6 }]
+  },
+  options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: { x: { beginAtZero: true, ticks: { callback: v => v+'%' } } }
+  }
+});
+
+// --- Expenses ---
+function expBadge(status) {
+  if (!status) return '';
+  if (status.includes('أساسي') || status.includes('طبيعي') || status.includes('مقبول')) return 'green';
+  if (status.includes('مراجعة')) return 'brown';
+  if (status.includes('مرتفع')) return 'red';
+  if (status.includes('منخفض')) return 'info';
+  return 'gray';
+}
+document.getElementById('tbody-exp').innerHTML = DATA.expense_breakdown.map(e => `
+  <tr>
+    <td>${e.name}</td>
+    <td class="num">${fmtJD(e.amount)}</td>
+    <td>${fmtPct(e.pct)}</td>
+    <td class="num">${fmtInt(e.per1k)}</td>
+    <td><span class="badge ${expBadge(e.status)}">${e.status || '—'}</span></td>
+    <td style="color:var(--muted);font-size:12px">${e.note || '—'}</td>
+  </tr>`).join('');
+
+// --- Ratios ---
+const ratioGroups = [
+  { key: 'profitability', title: 'نسب الربحية',     icon: '💹' },
+  { key: 'returns',       title: 'العوائد على الاستثمار', icon: '📈' },
+  { key: 'liquidity',     title: 'نسب السيولة',     icon: '💧' },
+  { key: 'leverage',      title: 'نسب المديونية',   icon: '⚖️' },
+  { key: 'efficiency',    title: 'نسب الكفاءة',     icon: '⚡' },
+];
+
+function ratingBadge(r) {
+  if (!r) return 'gray';
+  if (r.includes('استثنائي') || r.includes('ممتاز') || r.includes('جيد جداً')) return 'green';
+  if (r.includes('جيد')) return 'green';
+  if (r.includes('مقبول')) return 'brown';
+  if (r.includes('مراجعة')) return 'brown';
+  if (r.includes('مرتفع جداً') || r.includes('ضعيف جداً') || r.includes('خطر') || r.includes('طويلة')) return 'red';
+  if (r.includes('إيجابي')) return 'green';
+  return 'gray';
+}
+
+document.getElementById('ratios-blocks').innerHTML = ratioGroups.map(g => {
+  const items = DATA.ratios[g.key] || [];
+  return `
+    <div class="card list-card" style="margin-bottom:16px;">
+      <h3>${g.icon} ${g.title}</h3>
+      <div class="table-scroll"><table>
+        <thead><tr><th>المؤشر</th><th>القيمة</th><th>التقييم</th><th>المعيار</th><th>تعليق</th></tr></thead>
+        <tbody>${items.map(i => `
+          <tr>
+            <td><b>${i.name}</b></td>
+            <td class="num" style="font-weight:700;color:var(--brown-d)">${i.value}</td>
+            <td><span class="badge ${ratingBadge(i.rating)}">${i.rating}</span></td>
+            <td style="color:var(--muted)">${i.benchmark}</td>
+            <td style="font-size:12px;color:var(--text-2)">${i.note}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>
+    </div>`;
+}).join('');
+
+// --- Summary lists ---
+['strengths','weaknesses','cash','recs'].forEach((k, idx) => {
+  const list = [DATA.strengths, DATA.weaknesses, DATA.cash_analysis, DATA.recommendations][idx];
+  document.getElementById('list-' + k).innerHTML = (list || []).map(i => `<li>${i}</li>`).join('');
+});
+</script>
+</body>
+</html>
